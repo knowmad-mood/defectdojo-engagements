@@ -1,0 +1,182 @@
+name: 'DefectDojo engagements'
+description: >
+    Manage Defectdojo engagements ( Create only )
+tags: >
+    description: > 
+        (string) Engagement tags
+inputs:
+  token:
+    description: > 
+        (string($date)) The personal access token used to access the API.
+    required: true
+  defectdojo_url:
+    description: > 
+        (string) The Defectdojo base url. Example: https://defectdojo.domain.com
+    required: true
+  defectdojo_endpoint:
+    description: > 
+        (string) The Defectdojo engagement endpoint. Default: /api/v2/engagements/
+    default: '/api/v2/engagements/'
+  tags:
+    description: >
+        (string) Tags. Default null.
+    default: ''
+  name:
+    description: > 
+        (string) Name
+    required: true
+  description:
+    description: > 
+        (string) Description
+    required: true
+  version:
+    description: > 
+        (string) Version of the product the engagement tested. Default null.
+    default: ''
+  first_contacted:
+    description: > 
+        (string($date)) First contacted. Default null.
+    default: ''
+  target_start:
+    description: > 
+        (string($date)) Target start.
+    required: true
+  target_end:
+    description: > 
+        (string($date)) Target end.
+    required: true
+  reason:
+    description: > 
+        (string) Reason. Default null.
+    default: ''
+  tracker:
+    description: > 
+        (string($uri)) Link to epic or ticket system with changes to version. Default null.
+    default: ''
+  test_strategy:
+    description: > 
+        (string($uri)) Test strategy. Default null.
+    default: ''
+  threat_model:
+    description: > 
+        (boolean) Threat model. Default value: false.
+    default: false
+  api_test:
+    description: > 
+        (boolean) Api test. Default value: false.
+    default: false
+  pen_test:
+    description: > 
+        (boolean) Pen test. Default value: false.
+    default: false
+  check_list:
+    description: > 
+        (boolean) Check list. Default value: false.
+    default: false
+  status:
+    description: > 
+        (string) Technical contact. Default null.
+    default: ''
+  engagement_type:
+    description: > 
+        (string) Engagement type. Default null. Options [ Interactive, CI/CD ]
+    default: ''
+  build_id:
+    description: > 
+        (string) Build ID of the product the engagement tested. Default null.
+    default: ''
+  commit_hash:
+    description: > 
+        (string) Commit hash from repo. Default null.
+    default: ''
+  branch_tag:
+    description: > 
+        (string) Tag or branch of the product the engagement tested. Default null.
+    default: ''
+  source_code_management_uri:
+    description: > 
+        (string($uri)) Resource link to source code. Default null.
+    default: ''
+  deduplication_on_engagement:
+    description: > 
+        (boolean) Deduplication within this engagement only. If enabled deduplication will only mark a finding in this engagement as duplicate of another finding if both findings are in this engagement. If disabled, deduplication is on the product level. Default false.
+    default: false
+  lead:
+    description: > 
+        (integer) Lead. Default null.
+    default: ''
+  requester:
+    description: > 
+        (integer) Requester. Default null.
+    default: ''
+  preset:
+    description: > 
+        (integer) Settings and notes for performing this engagement. Default null.
+    default: ''
+  report_type:
+    description: > 
+        (integer) Report type. Default null.
+    default: ''
+  product:
+    description: > 
+        (integer) Product.
+    required: true
+  build_server:
+    description: > 
+        (integer) Build server responsible for CI/CD test. Default null.
+    default: ''
+  source_code_management_server:
+    description: > 
+        (integer) Source code server for CI/CD test. Default null.
+    default: ''
+  orchestration_engine:
+    description: > 
+        (integer) Orchestration service responsible for CI/CD test. Default null.
+    default: ''
+outputs:
+  response:
+    description: 'DefectDojo manage engagement result'
+    value: ${{ steps.engagements.outputs.response }}
+runs:
+  using: 'composite'
+  steps:
+    - id: engagements
+      run: |
+        ${{ github.action_path }}/entrypoint.sh
+      shell: bash
+      env:
+        INPUT_TOKEN: ${{ inputs.token }}
+        INPUT_DEFECTDOJO_URL: ${{ inputs.defectdojo_url }}
+        INPUT_DEFECTDOJO_ENDPOINT: ${{ inputs.defectdojo_endpoint }}
+        INPUT_TAGS: ${{ inputs.tags }}
+        INPUT_NAME: ${{ inputs.name }}
+        INPUT_DESCRIPTION: ${{ inputs.description }}
+        INPUT_VERSION: ${{ inputs.version }}
+        INPUT_FIRST_CONTACTED: ${{ inputs.first_contacted }}
+        INPUT_TARGET_START: ${{ inputs.target_start }}
+        INPUT_TARGET_END: ${{ inputs.target_end }}
+        INPUT_REASON: ${{ inputs.reason }}
+        INPUT_TRACKER: ${{ inputs.tracker }}
+        INPUT_TEST_STRATEGY: ${{ inputs.test_strategy }}
+        INPUT_THREAT_MODEL: ${{ inputs.threat_model }}
+        INPUT_API_TEST: ${{ inputs.api_test }}
+        INPUT_PEN_TEST: ${{ inputs.pen_test }}
+        INPUT_CHECK_LIST: ${{ inputs.check_list }}
+        INPUT_STATUS: ${{ inputs.status }}
+        INPUT_ENGAGEMENT_ID: ${{ inputs.engagement_type }}
+        INPUT_BUILD_ID: ${{ inputs.build_id }}
+        INPUT_COMMIT_HASH: ${{ inputs.commit_hash }}
+        INPUT_BRANCH_TAG: ${{ inputs.branch_tag }}
+        INPUT_SOURCE_CODE_MANAEMENT_URI: ${{ inputs.source_code_management_uri }}
+        INPUT_DEDUPLICATION_ON_ENGAGEMENT: ${{ inputs.deduplication_on_engagement }}
+        INPUT_LEAD: ${{ inputs.lead }}
+        INPUT_REQUESTER: ${{ inputs.requester }}
+        INPUT_PRESET: ${{ inputs.preset }}
+        INPUT_REPORT_TYPE: ${{ inputs.report_type }}
+        INPUT_PRODUCT: ${{ inputs.product }}
+        INPUT_BUILD_SERVER: ${{ inputs.build_server }}
+        INPUT_SOURCE_CODE_MANAEMENT_SERVER: ${{ inputs.source_code_management_server }}
+        INPUT_ORCHESTRATION_ENGINE: ${{ inputs.orchestration_engine }}
+branding:
+  icon: 'target'
+  color: 'gray-dark'
