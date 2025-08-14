@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: defectdojo-engagements
+  annotations:
+    github.com/project-slug: knowmad-mood/defectdojo-engagements
+spec:
+  type: other
+  lifecycle: unknown
+  owner: knowmad-mood
